@@ -21,7 +21,7 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
-import org.dynmap.DynmapAPI;
+import org.dynmap.DynmapCommonAPI;
 import org.dynmap.markers.AreaMarker;
 import org.dynmap.markers.MarkerAPI;
 import org.dynmap.markers.MarkerSet;
@@ -46,7 +46,7 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
     private static final String DEF_INFOWINDOW = "<div class=\"infowindow\"><span style=\"font-size:120%;\">%regionname%</span><br /> Owner <span style=\"font-weight:bold;\">%playerowners%</span><br />Flags<br /><span style=\"font-weight:bold;\">%flags%</span></div>";
     public static final String BOOST_FLAG = "dynmap-boost";
     Plugin dynmap;
-    DynmapAPI api;
+    DynmapCommonAPI api;
     MarkerAPI markerapi;
     BooleanFlag boost_flag;
     int updatesPerTick = 20;
@@ -372,7 +372,7 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
             severe("Cannot find dynmap!");
             return;
         }
-        api = (DynmapAPI)dynmap; /* Get API */
+        api = (DynmapCommonAPI)dynmap; /* Get API */
         /* Get WorldGuard */
         Plugin wgp = pm.getPlugin("WorldGuard");
         if(wgp == null) {
