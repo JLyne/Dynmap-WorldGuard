@@ -1,0 +1,15 @@
+[versions]
+pluginYmlPaper = "0.7.1"
+paperApi = "1.21.5-R0.1-SNAPSHOT"
+worldedit = "7.3.13"
+worldguard = "7.0.13"
+dynmap = "3.7-SNAPSHOT"
+
+[libraries]
+paperApi = { group = "io.papermc.paper", name = "paper-api", version.ref = "paperApi" }
+worldedit =  { group = "com.sk89q.worldedit", name = "worldedit-bukkit", version.ref  = "worldedit" }
+worldguard =  { group = "com.sk89q.worldguard", name = "worldguard-bukkit", version.ref  = "worldguard" }
+dynmap =  { group = "us.dynmap", name = "DynmapCoreAPI", version.ref  = "dynmap" }
+
+[plugins]
+pluginYmlPaper = { id = "de.eldoria.plugin-yml.paper", version.ref = "pluginYmlPaper" }
