@@ -41,6 +41,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import com.sk89q.worldguard.protection.regions.RegionType;
 
+@SuppressWarnings("UnstableApiUsage")
 public class DynmapWorldGuardPlugin extends JavaPlugin {
     private static Logger log;
     private static final String DEF_INFOWINDOW = "<div class=\"infowindow\"><span style=\"font-size:120%;\">%regionname%</span><br /> Owner <span style=\"font-weight:bold;\">%playerowners%</span><br />Flags<br /><span style=\"font-weight:bold;\">%flags%</span></div>";
@@ -163,7 +164,8 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
                 DefaultDomain dd = region.getOwners();
                 PlayerDomain pd = dd.getPlayerDomain();
                 if(pd != null) {
-                    for(String p : pd.getPlayers()) {
+					//noinspection deprecation
+					for(String p : pd.getPlayers()) {
                         as = ownerstyle.get(p.toLowerCase());
                         if (as != null) break;
                     }
@@ -174,7 +176,8 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
                         }
                     }
                     if (as == null) {
-                    	for(String p : pd.getPlayers()) {
+						//noinspection deprecation
+						for(String p : pd.getPlayers()) {
                             if (p != null) {
                                 as = ownerstyle.get(p.toLowerCase());
                                 if (as != null) break;
@@ -239,10 +242,10 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
                 /* Make outline */
                 x = new double[4];
                 z = new double[4];
-                x[0] = l0.getX(); z[0] = l0.getZ();
-                x[1] = l0.getX(); z[1] = l1.getZ()+1.0;
-                x[2] = l1.getX() + 1.0; z[2] = l1.getZ()+1.0;
-                x[3] = l1.getX() + 1.0; z[3] = l0.getZ();
+                x[0] = l0.x(); z[0] = l0.z();
+                x[1] = l0.x(); z[1] = l1.z()+1.0;
+                x[2] = l1.x() + 1.0; z[2] = l1.z()+1.0;
+                x[3] = l1.x() + 1.0; z[3] = l0.z();
             }
             else if(tn == RegionType.POLYGON) {
                 ProtectedPolygonalRegion ppr = (ProtectedPolygonalRegion)region;
@@ -251,7 +254,7 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
                 z = new double[points.size()];
                 for(int i = 0; i < points.size(); i++) {
                     BlockVector2 pt = points.get(i);
-                    x[i] = pt.getX(); z[i] = pt.getZ();
+                    x[i] = pt.x(); z[i] = pt.z();
                 }
             }
             else {  /* Unsupported type */
@@ -269,7 +272,7 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
                 m.setLabel(name);   /* Update label */
             }
             if(use3d) { /* If 3D? */
-                m.setRangeY(l1.getY()+1.0, l0.getY());
+                m.setRangeY(l1.y()+1.0, l0.y());
             }            
             /* Set line and fill properties */
             addStyle(id, world.getName(), m, region);
@@ -352,7 +355,7 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
         @EventHandler(priority=EventPriority.MONITOR)
         public void onPluginEnable(PluginEnableEvent event) {
             Plugin p = event.getPlugin();
-            String name = p.getDescription().getName();
+            String name = p.getPluginMeta().getName();
             if(name.equals("dynmap")) {
                 Plugin wg = p.getServer().getPluginManager().getPlugin("WorldGuard");
                 if(wg != null && wg.isEnabled())
@@ -482,7 +485,7 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
         
         getServer().getScheduler().scheduleSyncDelayedTask(this, new UpdateJob(), 40);   /* First time is 2 seconds */
         
-        info("version " + this.getDescription().getVersion() + " is activated");
+        info("version " + this.getPluginMeta().getVersion() + " is activated");
     }
 
     public void onDisable() {
