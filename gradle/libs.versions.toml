@@ -1,6 +1,6 @@
 [versions]
 pluginYmlPaper = "0.7.1"
-paperApi = "1.21.5-R0.1-SNAPSHOT"
+paperApi = "1.21.6-R0.1-SNAPSHOT"
 worldedit = "7.3.14"
 worldguard = "7.0.13"
 dynmap = "3.7-SNAPSHOT"
