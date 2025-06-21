@@ -25,7 +25,6 @@ repositories {
     maven {
         url = uri("https://maven.enginehub.org/repo/")
     }
-	mavenCentral()
 	mavenLocal()
 }
 
