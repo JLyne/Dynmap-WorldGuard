@@ -16,8 +16,6 @@ java {
 }
 
 repositories {
-	mavenLocal()
-	mavenCentral()
 	maven {
 		url = uri("https://repo.papermc.io/repository/maven-public/")
 	}
@@ -27,6 +25,8 @@ repositories {
     maven {
         url = uri("https://maven.enginehub.org/repo/")
     }
+	mavenCentral()
+	mavenLocal()
 }
 
 dependencies {
