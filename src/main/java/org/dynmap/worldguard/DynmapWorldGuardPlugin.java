@@ -41,7 +41,6 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import com.sk89q.worldguard.protection.regions.RegionType;
 
-@SuppressWarnings("UnstableApiUsage")
 public class DynmapWorldGuardPlugin extends JavaPlugin {
     private static Logger log;
     private static final String DEF_INFOWINDOW = "<div class=\"infowindow\"><span style=\"font-size:120%;\">%regionname%</span><br /> Owner <span style=\"font-weight:bold;\">%playerowners%</span><br />Flags<br /><span style=\"font-weight:bold;\">%flags%</span></div>";
@@ -132,13 +131,13 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
     }
     
     private boolean isVisible(String id, String worldname) {
-        if((visible != null) && (visible.size() > 0)) {
+        if((visible != null) && (!visible.isEmpty())) {
             if((!visible.contains(id)) && (!visible.contains("world:" + worldname)) &&
                     (!visible.contains(worldname + "/" + id))) {
                 return false;
             }
         }
-        if((hidden != null) && (hidden.size() > 0)) {
+        if((hidden != null) && (!hidden.isEmpty())) {
             return !hidden.contains(id) && !hidden.contains("world:" + worldname) && !hidden.contains(
                     worldname + "/" + id);
         }
@@ -199,9 +198,9 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
         if(as == null)
             as = defstyle;
 
-        boolean unowned = (region.getOwners().getPlayers().size() == 0) &&
-                (region.getOwners().getUniqueIds().size() == 0) &&
-                (region.getOwners().getGroups().size() == 0);
+        boolean unowned = (region.getOwners().getPlayers().isEmpty()) &&
+                (region.getOwners().getUniqueIds().isEmpty()) &&
+                (region.getOwners().getGroups().isEmpty());
         int sc = 0xFF0000;
         int fc = 0xFF0000;
         try {
@@ -318,7 +317,7 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
                     return;
                 }
                 else {
-                    curworld = worldsToDo.remove(0);
+                    curworld = worldsToDo.removeFirst();
                     RegionContainer rc = WorldGuard.getInstance().getPlatform().getRegionContainer();
                     RegionManager rm = rc.get(curworld); /* Get region manager for world */
                     if(rm != null) {
@@ -335,7 +334,7 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
                     regionsToDo = null;
                     break;
                 }
-                ProtectedRegion pr = regionsToDo.remove(regionsToDo.size()-1);
+                ProtectedRegion pr = regionsToDo.removeLast();
                 int depth = 1;
                 ProtectedRegion p = pr;
                 while(p.getParent() != null) {
@@ -469,15 +468,11 @@ public class DynmapWorldGuardPlugin extends JavaPlugin {
             }
         }
         List<String> vis = cfg.getStringList("visibleregions");
-        if(vis != null) {
-            visible = new HashSet<>(vis);
-        }
-        List<String> hid = cfg.getStringList("hiddenregions");
-        if(hid != null) {
-            hidden = new HashSet<>(hid);
-        }
+		visible = new HashSet<>(vis);
+		List<String> hid = cfg.getStringList("hiddenregions");
+		hidden = new HashSet<>(hid);
 
-        /* Set up update job - based on periond */
+		/* Set up update job - based on periond */
         int per = cfg.getInt("update.period", 300);
         if(per < 15) per = 15;
         updperiod = per* 20L;
