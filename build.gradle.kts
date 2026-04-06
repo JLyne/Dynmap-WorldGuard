@@ -36,7 +36,7 @@ dependencies {
 
 paper {
     main = "org.dynmap.worldguard.DynmapWorldGuardPlugin"
-    apiVersion = libs.versions.paperApi.get().replace(Regex("\\-R\\d.\\d-SNAPSHOT"), "")
+    apiVersion = libs.versions.paperApi.get().replace(".build.+", "")
     authors = listOf("mikeprimm", "Jim (AnEnragedPigeon)")
     description = "Displays WorldGuard regions on Dynmap"
 
