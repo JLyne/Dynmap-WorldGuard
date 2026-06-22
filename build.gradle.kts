@@ -58,3 +58,12 @@ tasks {
         options.encoding = "UTF-8"
     }
 }
+
+// Required until Worldguard updates
+configurations.all {
+    resolutionStrategy {
+        force("com.google.guava:guava:33.6.0-jre")
+        force("com.google.code.gson:gson:2.14.0")
+        force("org.apache.logging.log4j:log4j-bom:2.25.2")
+    }
+}
